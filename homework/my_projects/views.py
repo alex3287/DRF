@@ -1,11 +1,15 @@
+# from rest_framework.decorators import parser_classes
+# from rest_framework.renderers import JSONRenderer, BrowsableAPIRenderer
 from rest_framework.viewsets import ModelViewSet
-from serializers import ProjectSerializer, ToDoSerializer
-from models import Project, ToDo
+from .models import Project, ToDo
+from .serializers import ProjectSerializer, ToDoSerializer
 
 
+# @parser_classes((JSONRenderer,))
 class ProjectViewSet(ModelViewSet):
-    queryset = Project.objects.all()
+    # renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ProjectSerializer
+    queryset = Project.objects.all()
 
 
 class ToDoViewSet(ModelViewSet):

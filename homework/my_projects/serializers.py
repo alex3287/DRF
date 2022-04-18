@@ -11,7 +11,7 @@ class ProjectSerializer(ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
-
+        # fields = ['date_create', 'name', 'users']
 
 class ToDoSerializer(ModelSerializer):
     creator = MyUserModelSerializer()
