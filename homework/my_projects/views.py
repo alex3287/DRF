@@ -3,6 +3,15 @@
 from rest_framework.viewsets import ModelViewSet
 from .models import Project, ToDo
 from .serializers import ProjectSerializer, ToDoSerializer
+from rest_framework.pagination import LimitOffsetPagination
+
+
+class ToDoLimitPagination(LimitOffsetPagination):
+    default_limit = 20
+
+
+class ProjectLimitPagination(LimitOffsetPagination):
+    default_limit = 10
 
 
 # @parser_classes((JSONRenderer,))
@@ -10,8 +19,10 @@ class ProjectViewSet(ModelViewSet):
     # renderer_classes = [JSONRenderer, BrowsableAPIRenderer]
     serializer_class = ProjectSerializer
     queryset = Project.objects.all()
+    pagination_class = ProjectLimitPagination
 
 
 class ToDoViewSet(ModelViewSet):
     queryset = ToDo.objects.all()
     serializer_class = ToDoSerializer
+    pagination_class = ToDoLimitPagination

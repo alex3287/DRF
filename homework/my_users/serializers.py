@@ -1,8 +1,9 @@
 from rest_framework.serializers import HyperlinkedModelSerializer
 from .models import MyUser
+from rest_framework import serializers
 
 
-class MyUserModelSerializer(HyperlinkedModelSerializer):
+class MyUserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = MyUser
         # fields = '__all__'

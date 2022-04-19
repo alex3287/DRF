@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-e*%9h8u&)2d3p63td^@$am^$cu9n+q^$_hkckdc!10pq9=c#xh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'my_users',
     'my_projects',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,10 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': [
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+
 }
 
 DATABASES = {
