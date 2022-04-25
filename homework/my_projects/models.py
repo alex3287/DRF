@@ -9,7 +9,7 @@ class Project(models.Model):
     link_rep = models.URLField(verbose_name='Ссылка на репозиторий', max_length=255, blank=True, null=True)
     users = models.ManyToManyField(MyUser, verbose_name='Пользователи')
     creator = models.ForeignKey(MyUser, verbose_name='Создатель проекта',
-                                on_delete=models.CASCADE, related_name='creator_project',
+                                on_delete=models.CASCADE, related_name='myuser',
                                 blank=True, null=True)
 
     class Meta:

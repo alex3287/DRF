@@ -6,8 +6,8 @@ from rest_framework import serializers
 
 
 class ProjectSerializer(serializers.ModelSerializer):
-    users = MyUserModelSerializer(many=True)
-    creator = MyUserModelSerializer()
+    # users = MyUserModelSerializer(many=True)
+    # creator = MyUserModelSerializer()
 
     class Meta:
         model = Project
@@ -16,8 +16,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class ToDoSerializer(serializers.ModelSerializer):
-    creator = MyUserModelSerializer()
-    project = ProjectSerializer()
+    # creator = MyUserModelSerializer()
+    # project = ProjectSerializer()
 
     class Meta:
         model = ToDo

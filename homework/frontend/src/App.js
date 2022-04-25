@@ -1,19 +1,32 @@
 import React from 'react'
-import logo from './logo.svg';
-import './App.css';
-import UserList from "./components/User";
+// import './App.css';
 import axios from "axios";
+import UserList from "./components/UserList";
+import ToDoList from "./components/ToDoList";
+import ProjectList from "./components/ProjectList";
+import {BrowserRouter, Route, Routes, Link, Navigate, useLocation} from "react-router-dom";
 
+
+const NotFound = () => {
+    var locateion = useLocation()
+    return (
+        <div>
+            Page "{locateion.pathname}" not found
+        </div>
+    )
+}
 
 class App extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
-          'users': []
+          'users': [],
+          'projects': [],
+          'notes': [],
       }
   }
   componentDidMount() {
-   axios
+      axios
         .get('http://127.0.0.1:8000/api/users/')
         .then(response => {
           const users = response.data
@@ -24,54 +37,52 @@ class App extends React.Component {
           )
         })
         .catch(error => console.log(error))
+      axios
+        .get('http://127.0.0.1:8000/api/projects/')
+        .then(response => {
+          const projects = response.data
+          this.setState(
+              {
+                'projects': projects
+              }
+          )
+        })
+        .catch(error => console.log(error))
+      axios
+        .get('http://127.0.0.1:8000/api/note/')
+        .then(response => {
+          const notes = response.data
+          this.setState(
+              {
+                'notes': notes
+              }
+          )
+        })
+        .catch(error => console.log(error))
   }
-  // componentDidMount() {
-  //  axios
-  //       .get('http://127.0.0.1:8000/api/user')
-  //       .then(response => {
-  //         const users = response.data
-  //         this.setState(
-  //             {
-  //               'users': users
-  //             }
-  //         )
-  //       })
-  //       .catch(error => console.log(error))
-  // }
-  // componentDidMount() {
-  //     const users = [
-  //         {
-  //             "url": "http://127.0.0.1:8000/api/users/3/",
-  //             "username": "alex2",
-  //             "first_name": "Alex2",
-  //             "last_name": "L2",
-  //             "email": "alex2@mail.ru"
-  //         },
-  //         {
-  //             "url": "http://127.0.0.1:8000/api/users/2/",
-  //             "username": "alex",
-  //             "first_name": "Alex1",
-  //             "last_name": "Li",
-  //             "email": "alex1@mail.ru"
-  //         },
-  //         {
-  //             "url": "http://127.0.0.1:8000/api/users/1/",
-  //             "username": "al",
-  //             "first_name": "Alexej",
-  //             "last_name": "London",
-  //             "email": "lond@mail.ru"
-  //         }
-  //     ]
-  //     this.setState(
-  //         {
-  //             'users': users
-  //         }
-  //     )
-  // }
+
     render() {
     return (
         <div>
-          <UserList users={this.state.users} />
+           <BrowserRouter>
+               <nav>
+                    <ul>
+                        <li><Link to='/'>Главная</Link></li>
+                        <li><Link to='/users'>Список Пользователи</Link></li>
+                        <li><Link to='/projects'>Список Проекты</Link></li>
+                        <li><Link to='/note'>Список ToDo</Link></li>
+                    </ul>
+                </nav>
+               <Routes>
+                   <Route exact path='/' element={<UserList users={this.state.users} />}/>
+                   {/*<Route exact path='/users' element={<UserList users={this.state.users}/>}/>*/}
+                   <Route exact path='/users' element={<Navigate to='/' />}/>
+                   <Route exact path='/projects' element={<ProjectList projects={this.state.projects} />}/>
+                   <Route exact path='/note' element={<ToDoList notes={this.state.notes} />}/>
+                   <Route exact path='*' element={<NotFound/>}/>
+               </Routes>
+           </BrowserRouter>
+
         </div>
     )
   }
