@@ -2,9 +2,10 @@ from rest_framework.relations import StringRelatedField
 from rest_framework.serializers import ModelSerializer
 from my_projects.models import Project, ToDo
 from my_users.serializers import MyUserModelSerializer
+from rest_framework import serializers
 
 
-class ProjectSerializer(ModelSerializer):
+class ProjectSerializer(serializers.ModelSerializer):
     users = MyUserModelSerializer(many=True)
     creator = MyUserModelSerializer()
 
@@ -13,7 +14,8 @@ class ProjectSerializer(ModelSerializer):
         fields = '__all__'
         # fields = ['date_create', 'name', 'users']
 
-class ToDoSerializer(ModelSerializer):
+
+class ToDoSerializer(serializers.ModelSerializer):
     creator = MyUserModelSerializer()
     project = ProjectSerializer()
 
